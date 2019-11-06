@@ -44,10 +44,14 @@ def tree_size(nim_psn, sd, srt):  # tuple, dictionary, boolean
   psn = tuple(sorted(nim_psn)) if srt else nim_psn
   children = set() # if srt, use for children
   for j in range(len(psn)):
+    print("----", j)
     for k in range(psn[j]):
       new = psn[:j] + (k,) + psn[j+1:]
+      print(k ,":  ",new)
+      print(sd)
       if srt: children.add(tuple(sorted(new)))
       else:   ts += tree_size(new, sd, srt)
+
   if srt:
     for new in children:
       ts += tree_size(new, sd, srt)
@@ -56,8 +60,10 @@ def tree_size(nim_psn, sd, srt):  # tuple, dictionary, boolean
 
 def dag_nodes(nim_psn,S): # return set of nodes in DAG
   S.add(nim_psn)
+  # the loosing state
   if all(p == 0 for p in nim_psn):
     return S
+  # sort the
   psn = tuple(sorted(nim_psn))
   for j in range(len(psn)):
     for k in range(psn[j]):
